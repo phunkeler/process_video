@@ -47,9 +47,9 @@ def process_video(in_file: Path, encoder: str = 'libx264'):
     # Scale overlay (specify -1 for either w/h to maintain aspect-ratio)
     overlay = ffmpeg.filter(overlay, 'scale', 200, -1)
 
-    # Apply "speed ramp"
-    # 800% for first 5 seconds, then normal speed (100%) for 2 seconds and then back to 800% for next 2 seconds) 
-    stream = ffmpeg.filter(stream, 'trim', start=0, duration=10)
+    # TODO: Apply "speed ramp"
+        # 800% for first 5 seconds, then normal speed (100%) for 2 seconds and then back to 800% for next 2 seconds) 
+    #stream = ffmpeg.filter(stream, 'trim', start=0, duration=10)
 
     # Apply overlay at bottom-left (More accurate/re-usable positioning will require more complex arithmetic)
     stream = ffmpeg.overlay(stream, overlay, **{"x": 25, "y": height - 80})
@@ -60,18 +60,8 @@ def process_video(in_file: Path, encoder: str = 'libx264'):
     ffmpeg.run(stream)
 
     # Speed Ramp
-    #core.avs.LoadPlugin(path='D:\\Freelance\\Projects\\Konspiracy_AviSynth\\SickJumps.dll')
-    #get_frames(out_file)
+    #core.avs.LoadPlugin(path='D:\\Plugins\\SickJumps.dll')
     #core.avs.SickJumps(clip, 0, 30, 8, 2, 2)
-
-def get_frames(file: str):
-    probe = ffmpeg.probe(file, **{"show_frames":None})
-    clip = core.ffms2.Source(source=file)
-    print(f"FrameCount: {clip.num_frames}")
-    for frame in probe['frames']:
-        if float(frame['pts_time']) <= 5.00:
-            #print(f"Frame #: {frame.}")
-            ffmpeg.setpts(frame, '0.8*PTS')
 
 def main():
     youtube_video_url = 'https://www.youtube.com/watch?v=a7V02xJVLI0'
