@@ -4,7 +4,7 @@ from video import Video
 
 def main():
     yt_url = 'https://www.youtube.com/watch?v=a7V02xJVLI0'
-    overlay_path = Path("D:\\Freelance\\Projects\\Konspiracy_AviSynth\\process_video\\assets\\overlay.png")
+    overlay_path = Path("assets/overlay.png")
     video = Video()
     video.download_from_youtube(yt_url)
     overlay = Overlay(overlay_path)
