@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Module",
+            "type": "python",
+            "request": "launch",
+            "module": "process_video",
+            "justMyCode": true,
+            "args": [
+                "--video",
+                //" https://youtube.com/watch?v=a7V02xJVLI0",
+                "file://localhost/Freelance/Projects/Konspiracy_AviSynth/python/videos/youtube/video.mp4",
+                "--overlay",
+                //"file://localhost/Freelance/Projects/Konspiracy_AviSynth/python/assets/overlay.png",
+                "https://uploads-ssl.webflow.com/636ee28bef41c9864a0da73b/63a0df3ec43de803358feb65_KonspiracyLogo-2018-05.png",
+                "--compress",
+                "--resize-overlay",
+                "200, 200",
+                "--apply-overlay",
+                "25, 640"
+            ]
+            //"args": ["https://youtube.com/watch?v=a7V02xJVLI0"]
+        }
+    ]
+}

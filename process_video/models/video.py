@@ -1,9 +1,11 @@
-import ffmpeg
 from pathlib import Path
 from typing import Optional
-from info import Info
-from pytube import YouTube
-from overlay import Overlay
+
+import ffmpeg
+
+from process_video.models.info import Info
+from process_video.models.overlay import Overlay
+
 
 class Video:
     def __init__(self) -> None:
@@ -38,37 +40,37 @@ class Video:
         """
         if self._info:
             return self._info
-        
+
         if not self.file_path.is_file():
-            raise FileNotFoundError("The 'file_path' property is not a regular file or it hasn't been set.")
+            raise FileNotFoundError(
+                "The 'file_path' property is not a regular file or it hasn't been set."
+            )
 
         self._info = Info(self.file_path)
         return self._info
-    
+
     @property
     def stream(self) -> ffmpeg.nodes.FilterableStream:
         if self._stream:
             return self._stream
 
         if not self.file_path.is_file():
-            raise FileNotFoundError("The 'file_path' property is not a regular file or it hasn't been set.")
-        
+            raise FileNotFoundError(
+                "The 'file_path' property is not a regular file or it hasn't been set."
+            )
+
         self._stream = ffmpeg.input(str(self.file_path))
         return self._stream
-    
-    def apply_overlay(
-        self,
-        overlay: Overlay,
-        x: int,
-        y: int
-    ) -> None:
+
+    def apply_overlay(self, overlay: Overlay, x: int, y: int) -> None:
         self._stream = ffmpeg.overlay(self.stream, overlay.stream, **{"x": x, "y": y})
-    
+
     def download_from_youtube(
         self,
         url: str,
-        output_path: Optional[str] = 'videos/youtube',
-        filename: Optional[str] = 'video.mp4') -> Path:
+        output_path: Optional[str] = "videos/youtube",
+        filename: Optional[str] = "video.mp4",
+    ) -> Path:
         """
         Downloads a youtube video specified by the supplied 'url'.
         Defaults to the 'videos/youtube/video.mp4' file location'.
@@ -76,9 +78,9 @@ class Video:
         :param str url:
             A valid YouTube watch URL.
 
-        :param str output_path:  
-            (Optional) Output path for writing media file. If one is not 
-            specified, defaults to 'videos/youtube' in the current 
+        :param str output_path:
+            (Optional) Output path for writing media file. If one is not
+            specified, defaults to 'videos/youtube' in the current
             working directory.
 
         :param str filename:
@@ -88,21 +90,21 @@ class Video:
         try:
             (
                 YouTube(url)
-                    .streams
-                    .get_highest_resolution()
-                    .download(output_path=output_path, filename=filename)
+                .streams.get_highest_resolution()
+                .download(output_path=output_path, filename=filename)
             )
             self.file_path = Path(f"{output_path}/{filename}")
         except:
-            print("An exception occurred while trying to download & save the YouTube vide.")
+            print(
+                "An exception occurred while trying to download & save the YouTube vide."
+            )
 
-    def output(
-            self, 
-            file_extension: str = '.avi',
-            encoder: str = 'libx264'):
+    def output(self, file_extension: str = ".avi", encoder: str = "libx264"):
         if not self.file_path.is_file():
-            raise FileNotFoundError("The 'file_path' property is not a regular file or it hasn't been set.")
-        
+            raise FileNotFoundError(
+                "The 'file_path' property is not a regular file or it hasn't been set."
+            )
+
         out_file = str(self.file_path.with_suffix(file_extension))
         stream = ffmpeg.output(self.stream, out_file, **{"c:v": encoder})
         ffmpeg.run(stream)
