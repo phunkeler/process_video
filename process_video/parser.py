@@ -35,6 +35,11 @@ class Parser:
             type=coordinate,
             # TODO: Allow user to specify 'center', 'top-left', 'top-right', 'bot-right', 'bot_left'
         )
+        parser.add_argument(
+            "--speed-ramp",
+            help="Apply speed ramp of 800x for 5 sec., 1.0x  for 2 sec. then 800x for 2 sec.",
+            action="store_true",
+        )
         return parser.parse_args()
 
 

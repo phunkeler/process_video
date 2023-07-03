@@ -12,8 +12,8 @@
             "justMyCode": true,
             "args": [
                 "--video",
-                //" https://youtube.com/watch?v=a7V02xJVLI0",
-                "file://localhost/Freelance/Projects/Konspiracy_AviSynth/python/videos/youtube/video.mp4",
+                " https://youtube.com/watch?v=a7V02xJVLI0",
+                //"file://localhost/Freelance/Projects/Konspiracy_AviSynth/python/videos/youtube/video.mp4",
                 "--overlay",
                 //"file://localhost/Freelance/Projects/Konspiracy_AviSynth/python/assets/overlay.png",
                 "https://uploads-ssl.webflow.com/636ee28bef41c9864a0da73b/63a0df3ec43de803358feb65_KonspiracyLogo-2018-05.png",
@@ -21,7 +21,8 @@
                 "--resize-overlay",
                 "200, 200",
                 "--apply-overlay",
-                "25, 640"
+                "25, 640",
+                "--speed-ramp"
             ]
             //"args": ["https://youtube.com/watch?v=a7V02xJVLI0"]
         }
